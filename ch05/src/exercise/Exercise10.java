@@ -9,12 +9,14 @@ public class Exercise10 {
 		int[][] arr2 = { { 1, 2 }, { 3, 4 }, { 5, 6 } };	// 3x2
 		int[][] result = new int[2][2];
 
-		for (int i = 0; i < arr1.length; i++) {
-			for (int k = 0; k < arr1[i].length; k++) {
-				result[0][i] += arr1[0][k] * arr2[k][i];
-				result[1][i] += arr1[1][k] * arr2[k][i];
+		for (int row = 0; row < arr1.length; row++) {
+			for (int col = 0; col < arr2[row].length; col++) {
+				for(int i = 0; i < arr2.length; i++) {
+					result[row][col] += arr1[row][i] * arr2[i][col];
+				}
 			}	
 		}
+		
 		for(int[] i : result)
 			System.out.println(Arrays.toString(i));
 	}
