@@ -8,14 +8,16 @@ public class Exercise10 {
 		int[][] arr1 = { { 1, 2, 3 }, { 4, 5, 6 } };	// 2x3
 		int[][] arr2 = { { 1, 2 }, { 3, 4 }, { 5, 6 } };	// 3x2
 		
-		//Exercise10 exer = new Exercise10();
-		//int[][] result = exer.mathMultiple(arr1, arr2);
+		System.out.println("arr1의 배열 >>");
+		print(arr1);
+		System.out.println("\narr2의 배열 >>");
+		print(arr2);
+		System.out.println("\n둘을 곱한 배열 >>");
         int[][] result = mathMultiple(arr1, arr2);
-        
-        for(int[] i : result)
-			System.out.println(Arrays.toString(i));
+        print(result);
 	}
 	
+	/* 두 행렬을 곱하는 메소드 */
 	public static int[][] mathMultiple(int[][] x, int[][] y) {
 		int[][] result = new int[x.length][y[0].length];
 		
@@ -25,6 +27,12 @@ public class Exercise10 {
 					result[row][col] += x[row][i] * y[i][col];
 		
 		return result;
+	}
+	
+	/* 행렬 출력 메소드 */
+	public static void print(int[][] arr) {
+		for(int[] i : arr)
+			System.out.println(Arrays.toString(i));
 	}
 }
 /**
