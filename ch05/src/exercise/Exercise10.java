@@ -7,15 +7,24 @@ public class Exercise10 {
 		// 2차 행렬 곱셈 구하기
 		int[][] arr1 = { { 1, 2, 3 }, { 4, 5, 6 } };	// 2x3
 		int[][] arr2 = { { 1, 2 }, { 3, 4 }, { 5, 6 } };	// 3x2
-		int[][] result = new int[2][2];
-
-		for (int row = 0; row < arr1.length; row++) 
-			for (int col = 0; col < arr2[row].length; col++) 
-				for(int i = 0; i < arr2.length; i++) 
-					result[row][col] += arr1[row][i] * arr2[i][col];
 		
-		for(int[] i : result)
+		//Exercise10 exer = new Exercise10();
+		//int[][] result = exer.mathMultiple(arr1, arr2);
+        int[][] result = mathMultiple(arr1, arr2);
+        
+        for(int[] i : result)
 			System.out.println(Arrays.toString(i));
+	}
+	
+	public static int[][] mathMultiple(int[][] x, int[][] y) {
+		int[][] result = new int[x.length][y[0].length];
+		
+		for (int row = 0; row < x.length; row++) 
+			for (int col = 0; col < y[row].length; col++) 
+				for(int i = 0; i < y.length; i++) 
+					result[row][col] += x[row][i] * y[i][col];
+		
+		return result;
 	}
 }
 /**
