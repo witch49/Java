@@ -12,13 +12,18 @@ public class Exercise10 {
 		print(arr1);
 		System.out.println("\narr2의 배열 >>");
 		print(arr2);
-		System.out.println("\n둘을 곱한 배열 >>");
-        int[][] result = mathMultiple(arr1, arr2);
-        print(result);
+		
+		int[][] result = matMultiple(arr1, arr2);
+		if(result == null)
+			System.out.println("x 행렬의 열수와 y 행렬의 행수가 같아야 함");
+		else {
+			System.out.println("\n둘을 곱한 배열 >>");
+			print(result);
+		}
 	}
 	
 	/* 두 행렬을 곱하는 메소드 */
-	public static int[][] mathMultiple(int[][] x, int[][] y) {
+	public static int[][] matMultiple(int[][] x, int[][] y) {
 		int[][] result = new int[x.length][y[0].length];
 		
 		for (int row = 0; row < x.length; row++) 
