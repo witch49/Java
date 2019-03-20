@@ -30,10 +30,11 @@ public class StudentScore {
 		this.scoreMath = scoreMath;
 		this.scoreEnglish = scoreEnglish;
 		this.scoreScience = scoreScience;
+		// this.avg = average();
 	}
 
 	public double average() {
-		double avg = (double) (scoreMath + scoreEnglish + scoreScience) / 3;
+		double avg = (double) (this.scoreMath + this.scoreEnglish + this.scoreScience) / 3;
 		this.avg = avg;
 		return avg;
 	}
@@ -41,7 +42,7 @@ public class StudentScore {
 	@Override
 	public String toString() {
 		return "이름: " + name + ", 수학점수: " + scoreMath + ", 영어점수: " + scoreEnglish + ", 과학점수: " + scoreScience + ", 평균: "
-				+ avg;
+				+ String.format("%.2f", avg);
 	}
 
 }

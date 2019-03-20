@@ -18,6 +18,11 @@ public class StudentScoreExample {
 		student.average();	// 점수 평균 구하기
 		System.out.println(student.toString());
 
+		/**
+		 * int x = Integer.parseInt(sc.nextLine());
+		 * 
+		 * StudentScore student = new StudentScore(x, y, z, k);
+		 * */
 		sc.close();
 	}
 }
