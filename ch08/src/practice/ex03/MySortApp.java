@@ -1,5 +1,7 @@
 package practice.ex03;
 
+import java.util.Arrays;
+
 public class MySortApp {
 
 	private static void printArray(String[] arr) {
@@ -16,6 +18,7 @@ public class MySortApp {
 		
 		System.out.print("배열 오름차순 정렬 >> ");
 		printArray(mysort.sort(arr)); 
+		//System.out.println(Arrays.toString(mysort.sort(arr)));
 		
 		System.out.print("배열 내림차순 정렬 >> ");
 		printArray(mysort.sort(arr, true)); 

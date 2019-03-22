@@ -1,5 +1,7 @@
 package practice.ex04;
 
+import java.util.Arrays;
+
 public class MySortImpl implements MySort {
 
 	// 오름차순 정렬 메소드
@@ -7,6 +9,7 @@ public class MySortImpl implements MySort {
 	public String[] sort(String[] strArray) {
 		String[] arrayCopy = new String[strArray.length];
 		System.arraycopy(strArray, 0, arrayCopy, 0, strArray.length);
+		//String[] a = Arrays.copyOf(strArray, strArray.length);
 
 		// bubble sort 정렬
 		for (int i = arrayCopy.length - 1; i > 0; i--) {

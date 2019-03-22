@@ -18,7 +18,7 @@ public class MyMultiImpl implements MyMulti {
 				a[i - 1] = temp;
 			}
 		}
-		
+
 		return temp;
 	}
 
@@ -45,8 +45,8 @@ public class MyMultiImpl implements MyMulti {
 	@Override
 	public int sum(int[] a) {
 		int arraySum = 0;
-		for (int i = 0; i < a.length - 1; i++)
-			arraySum += a[i];
+		for (int i : a)
+			arraySum += i;
 		return arraySum;
 	}
 
