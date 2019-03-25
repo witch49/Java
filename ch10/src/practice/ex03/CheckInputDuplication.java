@@ -28,6 +28,11 @@ public class CheckInputDuplication {
 		String str = sc.nextLine();
 		inputArray = str.split(" ");
 
+		if (inputArray.length > 10) {
+			sc.close();
+			throw new Exception("입력값이 10개를 초과함");
+		}
+
 		System.out.print("outputs : ");
 		for (int i = 0; i < inputArray.length; i++) {
 			System.out.print(checkDuplication(count) + " ");
