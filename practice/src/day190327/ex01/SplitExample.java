@@ -35,13 +35,11 @@ public class SplitExample {
 
 			while (st.hasMoreTokens()) {
 				String token = st.nextToken(); // 현재 숫자 i를 token에 저장
-				String[] arr = token.split(""); // i를 숫자 1개씩 잘라 arr에 저장
+				String[] arr = token.split(""); // i를 숫자 1개씩 잘라 arr[]에 저장
 				for (int k = 0; k < arr.length; k++) {
 					int[] temp = new int[arr.length];
-					int a = 0;
 					temp[k] = Integer.parseInt(arr[k]);
-					a = temp[k];
-					sumTemp *= a;
+					sumTemp *= temp[k];
 				}
 			}
 			sum[i - 10] += sumTemp;

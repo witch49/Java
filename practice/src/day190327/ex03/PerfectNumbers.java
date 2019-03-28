@@ -25,7 +25,7 @@ public class PerfectNumbers {
 		}
 
 		System.out.println(input + " 이하의 모든 완전수는 다음과 같습니다.");
-		for (int i = 1; i < input; i++) {
+		for (int i = 1; i <= input; i++) {
 			int sum = 0;
 			// i가 완전수인지 확인하기
 			for (int k = 1; k < i; k++) {

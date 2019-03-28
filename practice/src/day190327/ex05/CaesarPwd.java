@@ -34,8 +34,14 @@ public class CaesarPwd {
 		char[] ch = new char[input.length()];
 		for (int i = 0; i < input.length(); i++) {
 			ch[i] = str[i].charAt(0);
-			ch[i] = (char) (ch[i] + key);
-			System.out.print(ch[i]);
+			if (ch[i] + key <= 90) {
+				ch[i] = (char) (ch[i] + key);
+				System.out.print(ch[i]);
+			} else {
+				ch[i] = (char) (ch[i] + (key - 26));
+				System.out.print(ch[i]);
+			}
+
 		}
 
 	}

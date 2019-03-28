@@ -30,27 +30,6 @@ public class Palindrome {
 					}
 				}
 				
-				/*// result = a * b;
-				String str = Integer.toString(a * b);
-				String[] strArray = str.split("");
-				// 곱셈 결과 숫자의 개수가 짝수인 경우
-				if (strArray.length % 2 == 0) {
-					String[] str1 = new String[strArray.length / 2]; // 앞
-					System.arraycopy(strArray, 0, str1, 0, (strArray.length / 2));
-					String[] str2 = new String[strArray.length / 2]; // 뒤
-					System.arraycopy(strArray, (strArray.length / 2), str2, 0, (strArray.length / 2));
-					// str2 뒤집기
-					// ...
-
-					for (int i = 0; i < (strArray.length / 2); i++) {
-						// 하나라도 같지 않으면
-						if (!str1[i].equals(str2[i])) {
-							result = 1;
-						}
-					}
-				} else {
-
-				}*/
 			}
 		}
 

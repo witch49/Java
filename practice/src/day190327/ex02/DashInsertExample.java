@@ -32,7 +32,7 @@ public class DashInsertExample {
 	public static StringBuffer dashInsert(String strNum) {
 
 		StringBuffer sb = new StringBuffer();
-		int a = -1, b = -1;
+		int a = 0, b = 0;
 		sb.append("" + strNum.charAt(0));
 
 		for (int i = 1; i < strNum.length(); i++) {
