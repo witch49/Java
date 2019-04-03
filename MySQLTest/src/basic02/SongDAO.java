@@ -1,10 +1,7 @@
 package basic02;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.List;
+import java.sql.*;
+import java.util.*;
 
 public class SongDAO {
 	private Connection conn;
@@ -79,7 +76,7 @@ public class SongDAO {
 			pStmt.setString(1, song.getTitle());
 			pStmt.setString(2, song.getLyrics());
 			pStmt.setInt(3, song.getId());
-		
+
 			pStmt.executeUpdate();
 
 		} catch (Exception e) {
@@ -100,7 +97,7 @@ public class SongDAO {
 		try {
 			pStmt = conn.prepareStatement(query);
 			pStmt.setInt(1, song.getId());
-			
+
 			pStmt.executeUpdate();
 
 		} catch (Exception e) {
@@ -114,10 +111,38 @@ public class SongDAO {
 			}
 		}
 	}
-	
+
+	/*
+	 * songDTO[] : 몇 개 들어올 지 모르므로 이거 말고 List 사용
+	 * 			 : ArrayLisy<SongDTO> / List<SongDTO>
+	 */
 	public List<SongDTO> selectAll() {
-		
-		return null;
+		String query = "select * from song";
+		PreparedStatement pStmt = null;
+		List<SongDTO> list = new ArrayList<SongDTO>();
+		try {
+			pStmt = conn.prepareStatement(query);
+			ResultSet rs = pStmt.executeQuery();
+
+			while (rs.next()) {
+				SongDTO song = new SongDTO();
+				song.setId(rs.getInt("_id"));
+				song.setTitle(rs.getString("title"));
+				song.setLyrics(rs.getString("lyrics"));
+				list.add(song);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pStmt != null && !pStmt.isClosed())
+					pStmt.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return list;
 	}
 
 }
