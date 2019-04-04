@@ -1,6 +1,7 @@
 package basic05;
 
 public class BbsDTO {
+	
 	private int bbsId;
 	private int bbsMemberId;
 	private String bbsTitle;
@@ -8,11 +9,16 @@ public class BbsDTO {
 	private String bbsContent;
 
 	public BbsDTO(int bbsId, int bbsMemberId, String bbsTitle, String bbsDate, String bbsContent) {
-		super();
 		this.bbsId = bbsId;
 		this.bbsMemberId = bbsMemberId;
 		this.bbsTitle = bbsTitle;
 		this.bbsDate = bbsDate;
+		this.bbsContent = bbsContent;
+	}
+	
+	public BbsDTO(int bbsMemberId, String bbsTitle, String bbsContent) {
+		this.bbsMemberId = bbsMemberId;
+		this.bbsTitle = bbsTitle;
 		this.bbsContent = bbsContent;
 	}
 

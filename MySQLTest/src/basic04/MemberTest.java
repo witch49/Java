@@ -6,7 +6,7 @@ public class MemberTest {
 	public static void main(String[] args) {
 		MemberApplication memberapp = new MemberApplication();
 		boolean state = true;
-
+		/* sql문 - day0403_1.sql 파일 */
 		while (state) {
 			System.out.print("회원메뉴 | 1-가입 2-조회 3-변경 4-삭제 5-검색 6-로그인기능 7-종료> ");
 			Scanner sc = new Scanner(System.in);

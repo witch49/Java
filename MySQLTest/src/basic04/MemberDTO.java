@@ -3,7 +3,7 @@ package basic04;
 public class MemberDTO {
 	private int memberId;
 	private String memberPassword;
-	private String memberName;
+	public String memberName;
 	private int memberBirth;
 	private String memberAddress;
 
@@ -14,7 +14,7 @@ public class MemberDTO {
 		this.memberBirth = memberBirth;
 		this.memberAddress = memberAddress;
 	}
-	
+
 	public MemberDTO(String memberPassword, String memberName, int memberBirth, String memberAddress) {
 		this.memberPassword = memberPassword;
 		this.memberName = memberName;
@@ -68,8 +68,12 @@ public class MemberDTO {
 
 	@Override
 	public String toString() {
-		return "MemberDTO [아이디=" + memberId + ", 패스워드=" + memberPassword + ", 이름=" + memberName
-				+ ", 생년월일=" + memberBirth + ", 주소=" + memberAddress + "]";
+		return "MemberDTO [아이디=" + memberId + ", 패스워드=" + memberPassword + ", 이름=" + memberName + ", 생년월일="
+				+ memberBirth + ", 주소=" + memberAddress + "]";
 	}
+
+//	public String toStringM() {
+//		return "BbsDTO [작성자=" + memberName;
+//	}
 
 }
