@@ -9,12 +9,13 @@ public class Member {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof Member) {
+		/* Member 타입으로 강제 타입 변환하고 id 필드값이 동일한지 검사해 동일하다면 true 리턴 */
+		if (obj instanceof Member) {	// instanceof : 부모자식 관계인지 확인
 			Member member = (Member) obj;
 			if (id.equals(member.id))
 				return true;
 		}
-		return false;
+		return false;	// 매개값이 Member가 아니거나 id 필드값이 다를 경우 false 리턴
 	}
 	
 	@Override
