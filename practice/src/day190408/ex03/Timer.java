@@ -40,6 +40,7 @@ public class Timer {
 		else if (h == 18 && m > 30)
 			System.out.println("퇴근 시간을 초과하였습니다.");
 		else {
+			System.out.println("퇴근 시간은 18:30:00");
 			if (s > 0 && m < 30)
 				System.out.println("남은 퇴근 시간은 " + (18 - h) + ":" + (30 - 1 - m) + ":" + (60 - s));
 			else if (s > 0 && m >= 30)
