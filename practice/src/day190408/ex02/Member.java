@@ -51,8 +51,11 @@ public class Member implements Comparable {
 	
 	@Override
 	public int compareTo(Object o) {
-		int iAge = ((Member) o).getAge();
-		return age - iAge;
+		if (o instanceof Member) {
+			int iAge = ((Member) o).getAge();
+			return age - iAge;
+		}
+		return -404;
 	}
 
 }
