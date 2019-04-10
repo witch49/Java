@@ -24,22 +24,14 @@ public class Company {
 
 	/* 1. 중복 포함 김씨와 이씨는 각각 몇 명? */
 	public static void method1(String[] namesArray) {
-		int count = 0;
-
-		char[][] array = new char[3][namesArray.length];
-
+		int countKim = 0, countLee = 0;
 		for (int i = 0; i < namesArray.length - 1; i++) {
-			for (int k = 0; k < 3; k++) {
-				array[k][i] = namesArray[i].charAt(k);
-			}
+			if (namesArray[i].charAt(0) == '김')
+				countKim++;
+			if (namesArray[i].charAt(0) == '이')
+				countLee++;
 		}
-
-		for (int i = 0; i < namesArray.length - 1; i++) {
-			if (array[0][i] == '김' || array[0][i] == '이')
-				count++;
-		}
-
-		System.out.println("1) " + count);
+		System.out.println("1) 김씨: " + countKim + "명, 이씨: " + countLee + "명");
 	}
 
 	/* 2. "이재영" 이름은 몇 번 중복? */
@@ -48,7 +40,7 @@ public class Company {
 		for (int i = 0; i < namesArray.length; i++)
 			if (namesArray[i].equals("이재영"))
 				count++;
-		System.out.println("2) " + count);
+		System.out.println("2) \"이재명\" 이름 횟수: " + count);
 
 	}
 
@@ -82,7 +74,7 @@ public class Company {
 
 		/* 4. 중복 제거한 이름을 오름차순으로 정렬하여 출력 */
 		String[] ascendingArr = new String[namesArray.length - count + 1]; // 복사할 배열 생성
-		for (int i = 0; i < namesArray.length - count; i++) {	// 배열 복사
+		for (int i = 0; i < namesArray.length - count; i++) { // 배열 복사
 			ascendingArr[i] = namesArray[i];
 		}
 		for (int i = 0; i < ascendingArr.length - 1; i++) {
