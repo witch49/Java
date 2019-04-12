@@ -7,6 +7,9 @@ public class HexaDump {
 	public static void main(String[] args) throws Exception {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("[입력 예시] D:/workspace/eclipse/practice/bin/day190411/ex02/HexaDump.class");
+		System.out.println("D:\\workspace\\eclipse\\ch18\\bin\\sec03\\exam01\\SystemInExample1.class");
+		System.out.println("D:/workspace/Penguins.jpg");
+		
 		System.out.print("찾을 파일명(확장자명 .class): ");
 		String path = sc.nextLine();
 
@@ -19,7 +22,7 @@ public class HexaDump {
 			if ((index % 8) == 0)
 				System.out.print(" ");
 			if ((index % 16) == 0)
-				System.out.printf("\n%08d:  ", index);
+				System.out.printf("\n%08X:  ", index);
 
 			String s = String.format("%02X", data);
 			System.out.print(s + " ");
@@ -40,6 +43,18 @@ public class HexaDump {
 
 			index++;
 			count++;
+		}
+
+		int x = (16 - count) * 3;
+		System.out.printf("%" + x + "s", "");
+		
+		for (int i = 0; i < count; i++) {
+			if ((char) arr[i] >= 65 && (char) arr[i] <= 90)
+				System.out.print((char) arr[i]);
+			else if ((char) arr[i] >= 97 && (char) arr[i] <= 122)
+				System.out.print((char) arr[i]);
+			else
+				System.out.print(".");
 		}
 
 		fis.close();
