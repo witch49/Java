@@ -195,7 +195,7 @@ public class ServerExample extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		BorderPane root = new BorderPane();
-		root.setPrefSize(500, 500);
+		root.setPrefSize(500, 300);
 
 		txtDisplay = new TextArea();
 		txtDisplay.setEditable(false);
