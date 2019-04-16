@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>성적</title>
+</head>
+<body style="text-align:center">
+	<form name="form1" action="/jspbook/ch04/ScoreServlet" method="post">
+	<h3>학생 성적 입력 폼</h3>
+	<hr>
+	<table style="margin:auto">
+		<tr>
+			<td>국어&emsp;</td>
+			<td><input type="text" name="scoreKor" width="200" size="10"></td>
+		</tr>
+		<tr>
+			<td>영어&emsp;</td>
+			<td><input type="text" name="scoreEng" width="200" size="10"></td>
+		</tr>
+		<tr>
+			<td>수학&emsp;</td>
+			<td><input type="text" name="scoreMath" width="200" size="10"></td>
+		</tr>
+		<tr>
+			<td colspan="2" style="text-align:center">
+			<br>
+			<input type="submit" value="제출" name="B1">&nbsp;
+			<input type="reset" value="다시 입력" name="B2">
+			</td>
+		</tr>
+	</table>
+	</form>
+</body>
+</html>
