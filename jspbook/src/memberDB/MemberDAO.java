@@ -174,12 +174,6 @@ public class MemberDAO {
 		List<MemberDTO> memberist = selectCondition(sql);
 		return memberist;
 	}
-	
-//	public List<MemberDTO> selectMemberById(int mId) {
-//		String sql = "select * from member where id=" + mId + ";";
-//		List<MemberDTO> memberist = selectCondition(sql);
-//		return memberist;
-//	}
 
 	/* 6 - 회원 로그인 (id, password 검증) */
 	public int verifyLogin(int mId, String mhashedPass) {
