@@ -34,14 +34,19 @@ public class MemberDAO {
 
 	/* 1 - 회원 가입 */
 	public void insertMember(MemberDTO member) {
-		String query = "insert into member (password, name, birth, address) values (?, ?, ?, ?);";
+		String query = "insert into member (password, name, birth, address, hashed) values (?, ?, ?, ?, ?);";
 		PreparedStatement pStmt = null;
 		try {
 			pStmt = conn.prepareStatement(query);
-			pStmt.setString(1, member.getMemberPassword());
+			
+			String hashedPwd = BCrypt.hashpw(member.getMemberPassword(), BCrypt.gensalt()); // 암호화 코드 생성
+			
+			pStmt.setString(1, "*");
 			pStmt.setString(2, member.getMemberName());
 			pStmt.setInt(3, member.getMemberBirth());
 			pStmt.setString(4, member.getMemberAddress());
+			pStmt.setString(5, hashedPwd);
+			
 			pStmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -169,20 +174,27 @@ public class MemberDAO {
 		List<MemberDTO> memberist = selectCondition(sql);
 		return memberist;
 	}
+	
+//	public List<MemberDTO> selectMemberById(int mId) {
+//		String sql = "select * from member where id=" + mId + ";";
+//		List<MemberDTO> memberist = selectCondition(sql);
+//		return memberist;
+//	}
 
 	/* 6 - 회원 로그인 (id, password 검증) */
-	public int verifyLogin(int mId, String mPass) {
-		String query = "select password from member where id=?";
+	public int verifyLogin(int mId, String mhashedPass) {
+		String query = "select hashed from member where id=?";
 		PreparedStatement pStmt = null;
 		ResultSet rs = null;
-		String dbPassword = "";
+		String hashedPwd = "";
 		try {
 			pStmt = conn.prepareStatement(query);
 			pStmt.setInt(1, mId);
 			rs = pStmt.executeQuery();
 			while (rs.next()) {
-				dbPassword = rs.getString(1);
-				if (dbPassword.equals(mPass))
+				hashedPwd = rs.getString(1);
+				//String hashedPwd = BCrypt.hashpw(plainPwd, BCrypt.gensalt());
+				if (BCrypt.checkpw(mhashedPass, hashedPwd))
 					return ID_PASSWORD_MATCH; // 로그인 성공
 				else
 					return PASSWORD_IS_WRONG;
@@ -201,4 +213,36 @@ public class MemberDAO {
 		}
 		return DATABASE_ERROR;
 	}
+	
+	/* 비밀번호 암호화 - BCrypt 사용 */
+	public void initPwd() {
+		List<MemberDTO> mList = selectMembersAll();
+		for(MemberDTO member : mList) {
+			int id = member.getMemberId();
+			String plainPwd = member.getMemberPassword();
+			String hashedPwd = BCrypt.hashpw(plainPwd, BCrypt.gensalt());
+			updatePwd(id, hashedPwd);
+		}
+	}
+	
+	public void updatePwd(int id, String hashed) {
+		String query = "update member set hashed=? where id=?";
+		PreparedStatement pStmt = null;
+		try {
+			pStmt = conn.prepareStatement(query);
+			pStmt.setString(1, hashed);
+			pStmt.setInt(2, id);
+			pStmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pStmt != null && !pStmt.isClosed())
+					pStmt.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
 }

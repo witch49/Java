@@ -4,7 +4,10 @@
 <%
 	request.setCharacterEncoding("UTF-8");
 	MemberDAO mDao = new MemberDAO();
-	int id = Integer.parseInt(request.getParameter("id"));
+	String strId = request.getParameter("id");
+	int id = 0;
+	if (strId.matches("\\d+"))
+		id = Integer.parseInt(strId);
 	String password = request.getParameter("password");
 	int result = mDao.verifyLogin(id, password);
 	String errorMessage = null;

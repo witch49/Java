@@ -23,7 +23,8 @@
 		<th width="80">아이디</th>
 		<th width="80">이름</th>
 		<th width="80">생년월일</th>
-		<th width="200">주소</th>
+		<th width="250">주소</th>
+		<th width="50">액션</th>
 	</tr>
 	<% for(MemberDTO m : memberlist) { %>
 	<tr>
@@ -31,6 +32,8 @@
 		<td><%= m.getMemberName() %></td>
 		<td><%= m.getMemberBirth() %></td>
 		<td><%= m.getMemberAddress() %></td>
+		<%	String url = "memberProcServlet?action=update&id=" + m.getMemberId(); %>
+		<td><button onclick="location.href='<%=url%>'">수정</button></td>
 	</tr>
 	<% } %>
 	</table>	
