@@ -24,7 +24,8 @@
 		<th width="80">이름</th>
 		<th width="80">생년월일</th>
 		<th width="250">주소</th>
-		<th width="50">액션</th>
+		<th colspan=2 width="100">액션</th>
+		
 	</tr>
 	<% for(MemberDTO m : memberlist) { %>
 	<tr>
@@ -32,8 +33,10 @@
 		<td><%= m.getMemberName() %></td>
 		<td><%= m.getMemberBirth() %></td>
 		<td><%= m.getMemberAddress() %></td>
-		<%	String url = "memberProcServlet?action=update&id=" + m.getMemberId(); %>
-		<td><button onclick="location.href='<%=url%>'">수정</button></td>
+		<%	String urlUp = "memberProcServlet?action=update&id=" + m.getMemberId(); 
+			String urlDel = "memberProcServlet?action=delete&id=" + m.getMemberId(); %>
+		<td><button onclick="location.href='<%=urlUp%>'">수정</button></td>
+		<td><button onclick="location.href='<%=urlDel%>'">삭제</button></td>
 	</tr>
 	<% } %>
 	</table>	

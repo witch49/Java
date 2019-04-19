@@ -1,6 +1,8 @@
 package memberDB;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -31,6 +33,12 @@ public class UpdateMember extends HttpServlet {
 		MemberDAO mDao = new MemberDAO();
 		mDao.updateMember(member);
 		mDao.close();
+		
+		String message = "아래와 같이 수정됨\\n" + member.toString();
+		request.setAttribute("message", message);
+		request.setAttribute("url", "loginMain.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("alertMsg.jsp");
+		rd.forward(request, response);
 		
 		response.sendRedirect("loginMain.jsp");
 	}

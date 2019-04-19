@@ -154,8 +154,6 @@ public class MemberDAO {
 			pStmt.setInt(1, mId);
 
 			pStmt.executeUpdate();
-
-			System.out.println("=== id:" + mId + " 삭제 완료 ===");
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

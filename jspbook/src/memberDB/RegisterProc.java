@@ -1,6 +1,8 @@
 package memberDB;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -30,6 +32,11 @@ public class RegisterProc extends HttpServlet {
 		mDao.insertMember(new MemberDTO(password, name, birth, address));
 		mDao.close();	
 		
+		String message = "회원 가입 완료";
+		request.setAttribute("message", message);
+		request.setAttribute("url", "login.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("alertMsg.jsp");
+		rd.forward(request, response);
 	}
 
 }
