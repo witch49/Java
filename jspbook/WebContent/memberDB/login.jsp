@@ -39,7 +39,7 @@ label span {
 	<center>
 		<h2>Member Login</h2>
 		<hr>
-	<form name="loginForm" action="/jspbook/memberDB/loginProcServlet" method="post">
+	<form name="loginForm" action="/jspbook/memberDB/memberProcServlet?action=login" method="post">
 		<label><span>ID:</span>
 			<input type="text" name="id" size="10">
 		</label>

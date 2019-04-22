@@ -27,7 +27,7 @@ label span {
 
 <h3>회원 정보 수정</h3>
 	<hr>
-	<form name="registerForm" action="/jspbook/memberDB/UpdateMemberServlet" method="post">
+	<form name="registerForm" action="/jspbook/memberDB/memberProcServlet?action=execute" method="post">
 		<!--  <label><span>패스워드:</span>
 			<input type="text" name="memberPassword" size="20">
 		</label><br> -->
