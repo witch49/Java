@@ -15,15 +15,18 @@
 <title>loginMain</title>
 </head>
 <body>
-<center>
+<div align="center">
 	<h3>회원 명단</h3>
+	<hr>
+	현재 접속중인 고객ID: <%= session.getAttribute("memberId") %>, 이름: <%= session.getAttribute("memberName") %><br>
+	<a href="/jspbook/memberDB/memberProcServlet?action=logout">로그아웃</a>
 	<hr>
 	<table border="1" style="border:1px solid black; text-align:center; border-collapse:collapse; margin:auto;">
 	<tr bgcolor="lightskyblue">
 		<th width="80">아이디</th>
 		<th width="80">이름</th>
 		<th width="80">생년월일</th>
-		<th width="250">주소</th>
+		<th width="300">주소</th>
 		<th colspan=2 width="100">액션</th>
 		
 	</tr>
@@ -40,6 +43,6 @@
 	</tr>
 	<% } %>
 	</table>	
-</center>
+</div>
 </body>
 </html>

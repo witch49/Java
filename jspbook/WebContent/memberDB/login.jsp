@@ -36,7 +36,7 @@ label span {
 		out.println("<script>alert('" + error + "')</script>");
 	}
 %>
-	<center>
+	<div align="center">
 		<h2>Member Login</h2>
 		<hr>
 	<form name="loginForm" action="/jspbook/memberDB/memberProcServlet?action=login" method="post">
@@ -54,6 +54,6 @@ label span {
 	</form>
 	<br>
 	<button onclick="location.href='loginRegister.html'">회원 가입</button>
-	</center>
+	</div>
 </body>
 </html>

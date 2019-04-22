@@ -1,7 +1,6 @@
 package memberDB;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @WebServlet("/memberDB/memberProcServlet")
 public class MemberProc extends HttpServlet {
@@ -31,7 +31,7 @@ public class MemberProc extends HttpServlet {
 		String message = "", name = "", address = "", password = "";
 		int id = 0, birth = 0;
 		String action = request.getParameter("action");
-	
+		HttpSession session = request.getSession();
 		MemberDTO member = null;
 		MemberDAO mDao = new MemberDAO();
 		RequestDispatcher rd = null;
@@ -59,23 +59,31 @@ public class MemberProc extends HttpServlet {
 				errorMessage = "DB 오류";
 				break;
 			}
-			mDao.close();
 			
 			if (result == MemberDAO.ID_PASSWORD_MATCH) {
+				member = mDao.selectOne(id);
+				session.setAttribute("memberId", id);
+				session.setAttribute("memberName", member.getMemberName());
 				response.sendRedirect("loginMain.jsp");
 			} else {
 				// 방법 1 - 상대방이 getParameter("error")로 받을 때
 				String url = "login.jsp?error=" + errorMessage;
-				RequestDispatcher dispatcher = request.getRequestDispatcher(url);
-				dispatcher.forward(request, response);
+				rd = request.getRequestDispatcher(url);
+				rd.forward(request, response);
 				
 				// 방법 2 - 상대방이 getAttribute("error")로 받을 때
 //				request.setAttribute("error", errorMessage);
 //				RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
 //				rd.forward(request, response);
-				
 			}
 			
+			break;
+			
+			///////////////////////////////////////////////////////////////////////////////
+		case "logout":	// 로그아웃
+			session.removeAttribute("memberId");
+			session.removeAttribute("memberName");
+			response.sendRedirect("login.jsp");			
 			break;
 		
 			///////////////////////////////////////////////////////////////////////////////
@@ -102,6 +110,15 @@ public class MemberProc extends HttpServlet {
 			if (!request.getParameter("id").equals(""))
 				id = Integer.parseInt(request.getParameter("id").trim());
 			
+			if(id != (Integer) session.getAttribute("memberId")) {
+				message = "본인 계정이 아닙니다.";
+				request.setAttribute("message", message);
+				request.setAttribute("url", "loginMain.jsp");
+				rd = request.getRequestDispatcher("alertMsg.jsp");
+				rd.forward(request, response);
+				break;
+			}
+			
 			member = mDao.selectOne(id);
 			mDao.close();	
 			
@@ -117,7 +134,7 @@ public class MemberProc extends HttpServlet {
 			
 			if (!request.getParameter("id").equals(""))
 				id = Integer.parseInt(request.getParameter("id").trim());
-			
+
 			name = request.getParameter("name");
 			birth = Integer.parseInt(request.getParameter("birth").trim());
 			address = request.getParameter("address");
@@ -142,6 +159,15 @@ public class MemberProc extends HttpServlet {
 		case "delete":	// 삭제 버튼 클릭
 			if (!request.getParameter("id").equals(""))
 				id = Integer.parseInt(request.getParameter("id").trim());
+			
+			if(id != (Integer) session.getAttribute("memberId")) {
+				message = "본인 계정이 아닙니다.";
+				request.setAttribute("message", message);
+				request.setAttribute("url", "loginMain.jsp");
+				rd = request.getRequestDispatcher("alertMsg.jsp");
+				rd.forward(request, response);
+				break;
+			}
 			
 			mDao.deleteMember(id);
 			mDao.close();

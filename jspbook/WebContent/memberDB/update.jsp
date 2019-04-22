@@ -43,7 +43,7 @@ label span {
 			<br>(입력 형식 : 910101)
 		</label><br>
 		<label><span>주소:</span>
-			<input type="text" name="address" value="<%= member.getMemberAddress() %>" size="20">
+			<input type="text" name="address" value="<%= member.getMemberAddress() %>" size="30">
 		</label><br><br>
 		<label>
 			<span></span><input type="submit" value="수정" name="B1">&nbsp;&nbsp;
