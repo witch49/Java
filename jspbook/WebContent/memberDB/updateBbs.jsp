@@ -21,29 +21,29 @@ label span {
 </head>
 <body>
 <%
-	MemberDTO member = (MemberDTO) request.getAttribute("member");
+	BbsDTO bbs = (BbsDTO) request.getAttribute("bbs");
 %>
-
-<h3>회원 정보 수정</h3>
+<h3>작성한 글 수정</h3>
 	<hr>
-	<form name="registerForm" action="/jspbook/memberDB/memberProcServlet?action=execute" method="post">
+	<form name="registerForm" action="/jspbook/memberDB/bbsProcServlet?action=execute" method="post">
 		<!--  <label><span>패스워드:</span>
 			<input type="text" name="memberPassword" size="20">
 		</label><br> -->
-		<input type="hidden" id="id" name="id" value="<%= member.getMemberId() %>">
-		<label><span>아이디:</span>
-			<%= member.getMemberId() %>
+		<input type="hidden" id="mId" name="mId" value="<%= bbs.getBbsMemberId() %>">
+		<label><span>회원 아이디:</span>
+			<%= bbs.getBbsMemberId() %>
 		</label><br>
-		<label><span>이름:</span>
-			<input type=text name="name" value="<%= member.getMemberName() %>" size="20">
+		<input type="hidden" id="bId" name="bId" value="<%= bbs.getBbsId() %>">
+		<label><span>글번호:</span>
+			<%= bbs.getBbsId() %>
 		</label><br>
-		<label><span>생년월일:</span>
-			<input type="text" name="birth" value="<%= member.getMemberBirth() %>" size="20">
-			<br>(입력 형식 : 910101)
+		<label><span>글제목:</span>
+			<input type=text name="title" value="<%= bbs.getBbsTitle() %>" size="35">
 		</label><br>
-		<label><span>주소:</span>
-			<input type="text" name="address" value="<%= member.getMemberAddress() %>" size="30">
-		</label><br><br>
+		<label><span>글내용:</span>
+			<textarea name="context" cols="40" rows="8" ><%= bbs.getBbsContent() %></textarea>
+		</label><br>
+		<br><br>
 		<label>
 			<span></span><input type="submit" value="수정" name="B1">&nbsp;&nbsp;
 			<input type="reset" value="재작성" name="B2"></label>
