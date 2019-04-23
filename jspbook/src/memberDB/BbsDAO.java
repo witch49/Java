@@ -197,26 +197,5 @@ public class BbsDAO {
 			}
 		}
 	}
-	
-//	/* 5 - 상세 조회 (bbs.id를 입력받아 제목, 글쓴이, 최종수정일, 내용 표기) */
-//	public BbsDTO selectBbsById(int bId) {
-//		String sql = "SELECT bbs.bbs_id, member.name, bbs.title, bbs.date, bbs.content "
-//				+ "FROM bbs INNER JOIN member ON bbs.memberId = member.id " + "where bbs.bbs_id = " + bId + ";";
-//		PreparedStatement pStmt = null;
-//		BbsDTO bbs = new BbsDTO();
-//		try {
-//			pStmt = conn.prepareStatement(sql);
-//			ResultSet rs = pStmt.executeQuery();
-//
-//			while (rs.next()) {
-//				System.out.print("BbsDTO [글번호=" + rs.getString(1) + ", 글쓴이=" + rs.getString(2) + ", 제목=" + rs.getString(3)
-//						+ ", 작성일=" + rs.getString(4) + ", 내용=" + rs.getString(5) + "]\n");
-//			}
-//
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//		return bbs;
-//	}
 
 }
