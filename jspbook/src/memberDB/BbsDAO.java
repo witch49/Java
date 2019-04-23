@@ -87,9 +87,9 @@ public class BbsDAO {
 		}
 	}
 	
-	/* 2 - 글 조회(id 순서대로 글목록 출력) */
+	/* 2 - 글 조회(최신 작성한 순서대로 글 목록 출력) */
 	public List<BbsDTO> selectPostsAll() {
-		String sql = "select * from bbs order by bbs_id;";
+		String sql = "select * from bbs order by date desc;";
 		List<BbsDTO> postlist = selectCondition(sql);
 		return postlist;
 	}
@@ -197,5 +197,48 @@ public class BbsDAO {
 			}
 		}
 	}
-
+//	
+//	/* 10개씩 잘라서 화면에 뿌려주기 */
+//	public ArrayList<BbsDTO> getList(int pageNumber){ 
+//		String SQL = "SELECT * FROM BBS ORDER BY bbs_id DESC LIMIT 10";
+//		ArrayList<BbsDTO> list = new ArrayList<BbsDTO>();
+//		try {
+//			PreparedStatement pstmt = conn.prepareStatement(SQL);
+//			pstmt.setInt(1, getNext() - (pageNumber -1) * 10);
+//			rs = pstmt.executeQuery();
+//			while (rs.next()) {
+//				Bbs bbs = new Bbs();
+//				bbs.setBbsId(rs.getInt(1));
+//				bbs.setBbsMemberId(rs.getString(2));
+//				bbs.setBbsTitle(rs.getString(3));
+//				bbs.setBbsDate(rs.getString(4));
+//				bbs.setBbsContent(rs.getString(5));
+//				list.add(bbs);
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		return list; 
+//
+//	}
+//
+//	// 10 단위 페이징 처리를 위한 함수
+//	public boolean nextPage(int pageNumber) {
+//		String SQL = "SELECT * FROM BBS WHERE bbsID < ? bbsAvailable = 1 ORDER BY bbsID DESC LIMIT 10";
+//		ArrayList<BbsDTO> list = new ArrayList<BbsDTO>();
+//		try {
+//			PreparedStatement pstmt = conn.prepareStatement(SQL);
+//			pstmt.setInt(1, getNext() - (pageNumber - 1) * 10);
+//			rs = pstmt.executeQuery();
+//			if (rs.next()) {
+//				return true;
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		return false;
+//	}
+	//https://rongscodinghistory.tistory.com/7
+	//https://tbbrother.tistory.com/71
+	
 }

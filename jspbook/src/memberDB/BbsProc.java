@@ -49,7 +49,7 @@ public class BbsProc extends HttpServlet {
 			if(mId != (Integer) session.getAttribute("memberId")) {
 				message = "본인이 작성한 글이 아닙니다.";
 				request.setAttribute("message", message);
-				request.setAttribute("url", "loginMain.jsp");
+				request.setAttribute("url", "bbs_list.jsp");
 				rd = request.getRequestDispatcher("alertMsg.jsp");
 				rd.forward(request, response);
 				break;
@@ -76,7 +76,7 @@ public class BbsProc extends HttpServlet {
 			if(mId != (Integer) session.getAttribute("memberId")) {
 				message = "본인이 작성한 글이 아닙니다.";
 				request.setAttribute("message", message);
-				request.setAttribute("url", "loginMain.jsp");
+				request.setAttribute("url", "bbs_list.jsp");
 				rd = request.getRequestDispatcher("alertMsg.jsp");
 				rd.forward(request, response);
 				break;
@@ -86,7 +86,7 @@ public class BbsProc extends HttpServlet {
 			bDao.close();
 			
 			message = "bId = " + bId + " 삭제 완료";
-			String url = "loginMain.jsp";
+			String url = "bbs_list.jsp";
 			request.setAttribute("message", message);
 			request.setAttribute("url", url);
 			
@@ -117,7 +117,7 @@ public class BbsProc extends HttpServlet {
 			
 			message = "아래와 같이 수정됨\\n" + bbs.toString();
 			request.setAttribute("message", message);
-			request.setAttribute("url", "loginMain.jsp");
+			request.setAttribute("url", "bbs_list.jsp");
 			rd = request.getRequestDispatcher("alertMsg.jsp");
 			rd.forward(request, response);
 			
@@ -151,7 +151,7 @@ public class BbsProc extends HttpServlet {
 			
 			message = "글 작성 완료";
 			request.setAttribute("message", message);
-			request.setAttribute("url", "loginMain.jsp");
+			request.setAttribute("url", "bbs_list.jsp");
 			rd = request.getRequestDispatcher("alertMsg.jsp");
 			rd.forward(request, response);
 			
