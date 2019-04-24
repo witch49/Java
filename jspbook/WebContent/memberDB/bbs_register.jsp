@@ -5,41 +5,33 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>새로운 글 작성</title>
-<style>
-label {
-	display: block; /* 새 라인에서 시작 */
-	padding: 5px;
-}
-
-label span {
-	display: inline-block;
-	width: 150px;
-	text-align: right;
-	padding: 10px;
-}
-</style>
 </head>
 <body>
-<%
-	//BbsDTO bbs = (BbsDTO) request.getAttribute("bbs");
-%>
+<div align="center">
 <h3>글 작성 폼</h3>
 	<hr>
 	<% String uu = "/jspbook/memberDB/bbsProcServlet?action=registerBtn&mId=" + session.getAttribute("memberId"); %>
 	<form name="registerForm" action="<%= uu %>" method="post">
-		<input type="hidden" id="mId" name="mId" value="">
-		<label><span>회원 아이디:</span>
-		<%= session.getAttribute("memberId") %>
-		</label><br>
-		<label><span>제목:</span>
-			<input type="text" name="bbsTitle" size="35">
-		</label><br>
-		<label><span>내용:</span>
-			<textarea name="bbsContext" cols="40" rows="8" ></textarea>
-		</label><br>
-		<label>
-			<span></span><input type="submit" value="등록" name="B1">&nbsp;&nbsp;
-			<input type="reset" value="재작성" name="B2"></label>
+	
+	<table border="1" style="border:1px solid black; text-align:center; border-collapse:collapse; margin:auto;">
+		<tr>
+			<th bgcolor="pink" style="width:100px">회원 ID</th>
+			<td style="width:550px">&nbsp;<%= session.getAttribute("memberId") %></td>
+		</tr>
+		<tr>
+			<th bgcolor="pink">제목</th>
+			<td><input type="text" name="bbsTitle" size="75"></td>
+		</tr>
+		<tr>
+			<th bgcolor="pink">내용</th>
+			<td><textarea name="bbsContext" cols="77" rows="20" ></textarea></td>
+		</tr>
+	</table>
+	<br>
+	<input type="submit" value="등록" name="B1">&nbsp;&nbsp;
+	<input type="reset" value="재작성" name="B2">
+
 	</form>
+</div>
 </body>
 </html>

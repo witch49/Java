@@ -87,9 +87,9 @@ public class BbsDAO {
 		}
 	}
 	
-	/* 2 - 글 조회(최신 작성한 순서대로 글 목록 출력) */
+	/* 2 - 글 조회(글번호 순서대로 글 목록 출력) */
 	public List<BbsDTO> selectPostsAll() {
-		String sql = "select * from bbs order by date desc;";
+		String sql = "select * from bbs order by bbs_id desc;";
 		List<BbsDTO> postlist = selectCondition(sql);
 		return postlist;
 	}
@@ -179,7 +179,7 @@ public class BbsDAO {
 	
 	/* 4 - 삭제 (id를 입력받아 본인이 작성한 글이라면 삭제) */
 	public void deleteBbs(int bId, int mId) {
-		String query = "DELETE from bbs where bbs_id=? and memberId=?";
+		String query = "DELETE from bbs where bbs_id=? and memberId=?;";
 		PreparedStatement pStmt = null;
 		try {
 			pStmt = conn.prepareStatement(query);
@@ -197,48 +197,48 @@ public class BbsDAO {
 			}
 		}
 	}
-//	
-//	/* 10개씩 잘라서 화면에 뿌려주기 */
-//	public ArrayList<BbsDTO> getList(int pageNumber){ 
-//		String SQL = "SELECT * FROM BBS ORDER BY bbs_id DESC LIMIT 10";
-//		ArrayList<BbsDTO> list = new ArrayList<BbsDTO>();
-//		try {
-//			PreparedStatement pstmt = conn.prepareStatement(SQL);
-//			pstmt.setInt(1, getNext() - (pageNumber -1) * 10);
-//			rs = pstmt.executeQuery();
-//			while (rs.next()) {
-//				Bbs bbs = new Bbs();
-//				bbs.setBbsId(rs.getInt(1));
-//				bbs.setBbsMemberId(rs.getString(2));
-//				bbs.setBbsTitle(rs.getString(3));
-//				bbs.setBbsDate(rs.getString(4));
-//				bbs.setBbsContent(rs.getString(5));
-//				list.add(bbs);
-//			}
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//		return list; 
-//
-//	}
-//
-//	// 10 단위 페이징 처리를 위한 함수
-//	public boolean nextPage(int pageNumber) {
-//		String SQL = "SELECT * FROM BBS WHERE bbsID < ? bbsAvailable = 1 ORDER BY bbsID DESC LIMIT 10";
-//		ArrayList<BbsDTO> list = new ArrayList<BbsDTO>();
-//		try {
-//			PreparedStatement pstmt = conn.prepareStatement(SQL);
-//			pstmt.setInt(1, getNext() - (pageNumber - 1) * 10);
-//			rs = pstmt.executeQuery();
-//			if (rs.next()) {
-//				return true;
-//			}
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//		return false;
-//	}
-	//https://rongscodinghistory.tistory.com/7
-	//https://tbbrother.tistory.com/71
 	
+	/* 글 10개씩 조회 */
+	public List<BbsDTO> getList(int pageNumber) {
+		String sql = "select * from bbs limit ?, 10;";
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<BbsDTO> list = new ArrayList<BbsDTO>();
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, (pageNumber - 1) * 10);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				BbsDTO bbs = new BbsDTO();
+				bbs.setBbsId(rs.getInt(1));
+				bbs.setBbsMemberId(rs.getInt(2));
+				bbs.setBbsTitle(rs.getString(3));
+				bbs.setBbsDate(rs.getString(4));
+				bbs.setBbsContent(rs.getString(5));
+				list.add(bbs);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list; 
+	}
+	
+	// 전체 글의 개수 가져오기
+	public int getListCount() {
+		String sql = "select count(*) from bbs";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			ResultSet rs = pstmt.executeQuery();
+			if (rs.next()) {
+				return rs.getInt(1);
+			}
+			return 1; // 첫 번째 게시물인 경우
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return -1; // 데이터베이스 오류
+	}
+	
+	//https://okky.kr/article/283315
+
 }

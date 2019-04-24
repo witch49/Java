@@ -4,50 +4,45 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>회원 수정</title>
-<style>
-label {
-	display: block; /* 새 라인에서 시작 */
-	padding: 5px;
-}
-
-label span {
-	display: inline-block;
-	width: 150px;
-	text-align: right;
-	padding: 10px;
-}
-</style>
+<title>글 수정</title>
 </head>
 <body>
 <%
 	BbsDTO bbs = (BbsDTO) request.getAttribute("bbs");
 %>
+<div align="center">
 <h3>작성한 글 수정</h3>
 	<hr>
 	<form name="registerForm" action="/jspbook/memberDB/bbsProcServlet?action=execute" method="post">
-		<!--  <label><span>패스워드:</span>
-			<input type="text" name="memberPassword" size="20">
-		</label><br> -->
-		<input type="hidden" id="mId" name="mId" value="<%= bbs.getBbsMemberId() %>">
-		<label><span>회원 아이디:</span>
-			<%= bbs.getBbsMemberId() %>
-		</label><br>
-		<input type="hidden" id="bId" name="bId" value="<%= bbs.getBbsId() %>">
-		<label><span>글번호:</span>
-			<%= bbs.getBbsId() %>
-		</label><br>
-		<label><span>글제목:</span>
-			<input type=text name="title" value="<%= bbs.getBbsTitle() %>" size="35">
-		</label><br>
-		<label><span>글내용:</span>
-			<textarea name="context" cols="40" rows="8" ><%= bbs.getBbsContent() %></textarea>
-		</label><br>
-		<br><br>
-		<label>
-			<span></span><input type="submit" value="수정" name="B1">&nbsp;&nbsp;
-			<input type="reset" value="재작성" name="B2"></label>
+	
+	<table border="1" style="border:1px solid black; text-align:center; border-collapse:collapse; margin:auto;">
+		<tr>
+			<th bgcolor="pink" style="width:100px">회원 ID</th>
+			<td style="width:550px; text-align:left;">&nbsp;
+				<input type="hidden" id="mId" name="mId" value="<%= bbs.getBbsMemberId() %>">
+				<%= bbs.getBbsMemberId() %>
+			</td>
+		</tr>
+		<tr>
+			<th bgcolor="pink">글번호</th>
+			<td style="text-align:left">&nbsp;
+				<input type="hidden" id="bId" name="bId" value="<%= bbs.getBbsId() %>">
+				<%= bbs.getBbsId() %>
+			</td>
+		</tr>
+		<tr>
+			<th bgcolor="pink">제목</th>
+			<td><input type="text" name="title" value="<%= bbs.getBbsTitle() %>" size="75"></td>
+		</tr>
+		<tr>
+			<th bgcolor="pink">내용</th>
+			<td><textarea name="context" cols="77" rows="20" ><%= bbs.getBbsContent() %></textarea></td>
+		</tr>
+	</table>
+	<br><br>
+		<input type="submit" value="수정" name="B1">&nbsp;&nbsp;
+		<input type="reset" value="재작성" name="B2">
 	</form>
-
+</div>
 </body>
 </html>

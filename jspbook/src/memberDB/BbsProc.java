@@ -31,7 +31,7 @@ public class BbsProc extends HttpServlet {
 	protected void doAction(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		String message = "", title = "", context = "";
-		int mId = 0, bId = 0;
+		int mId = 0, bId = 0, mWritterId = 0;
 		String action = request.getParameter("action");
 		HttpSession session = request.getSession();
 		BbsDTO bbs = null;
@@ -95,7 +95,6 @@ public class BbsProc extends HttpServlet {
 			
 			System.out.println(action + " 완료");
 
-			
 			break;
 			
 			///////////////////////////////////////////////////////////////////////////////
@@ -157,6 +156,18 @@ public class BbsProc extends HttpServlet {
 			
 			break;
 			
+				///////////////////////////////////////////////////////////////////////////////
+			case "detail":	// 글 제목 클릭 - 상세보기 화면으로 전환
+			if (!request.getParameter("mId").equals(""))
+				mWritterId = Integer.parseInt(request.getParameter("mId").trim());
+			if (!request.getParameter("bId").equals(""))
+				bId = Integer.parseInt(request.getParameter("bId").trim());
+			
+			session.setAttribute("bId", bId);
+			session.setAttribute("mWritterrId", mWritterId);
+			response.sendRedirect("bbs_list_content.jsp");
+			
+			break;
 
 		default:
 
