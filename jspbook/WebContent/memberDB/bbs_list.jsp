@@ -25,6 +25,7 @@
 	<tr bgcolor="pink">
 		<th width="40">번호</th>
 		<th width="80">회원ID</th>
+		<th width="70">작성자</th>
 		<th width="300">제목</th>
 		<th width="200">작성/수정일</th>
 		<%-- <th colspan=2 width="100">액션</th>--%>
@@ -44,7 +45,8 @@
 	<tr>
 		<td><%= b.getBbsId() %></td>
 		<td><%= b.getBbsMemberId() %></td>
-		<% String urlDetail = "/jspbook/memberDB/bbsProcServlet?action=detail&mId=" + b.getBbsMemberId() + "&bId=" + b.getBbsId(); %>
+		<td><%= bDao.selectMemberName((Integer) b.getBbsMemberId()) %></td>
+		<% String urlDetail = "/jspbook/memberDB/bbsProcServlet?action=detail&mId=" + b.getBbsMemberId() + "&bId=" + b.getBbsId() + "&mName=" + bDao.selectMemberName((Integer) b.getBbsMemberId()); %>
 		<td><a href="<%= urlDetail %>"><%= b.getBbsTitle() %></a></td>
 		<td><%= b.getBbsDate().substring(0,16) %></td>
 		<%-- 

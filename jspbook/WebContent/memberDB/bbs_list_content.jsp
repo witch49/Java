@@ -23,7 +23,7 @@ td {
 		</tr>
 		<tr>
 			<th bgcolor="pink">작성자(회원ID)</th>
-			<td>&nbsp;<%= session.getAttribute("mWritterrId") %></td>
+			<td>&nbsp;<%= session.getAttribute("mWritterName") %>(<%= session.getAttribute("mWritterId") %>)</td>
 		</tr>
 		<tr>
 			<th bgcolor="pink">제목</th>
@@ -46,7 +46,9 @@ td {
 				<%
 				for(BbsDTO b : bbslist) { 
 					if(b.getBbsId() == (Integer) session.getAttribute("bId")){%>
-					<%= b.getBbsContent() %>
+					<%-- <%= b.getBbsContent().replaceAll("\n", "<br>").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll(" ", "&nbsp;") %> --%>
+					<%-- <%= b.getBbsContent() %> --%>
+					<%= b.getBbsContent().replaceAll("\n", "<br>").replaceAll(" ", "&nbsp;") %>
 				<%	break;
 					}
 				}	%>
@@ -56,9 +58,9 @@ td {
 			<td colspan="2" style="text-align:center">
 				<a href="bbs_list.jsp">이전화면</a>&nbsp;&nbsp;
 				
-				<%	String urlUp = "bbsProcServlet?action=update&mId=" + session.getAttribute("mWritterrId") + "&bId=" + session.getAttribute("bId"); 
-					String urlDel = "bbsProcServlet?action=delete&mId=" + session.getAttribute("mWritterrId") + "&bId=" + session.getAttribute("bId");
-					if(session.getAttribute("mWritterrId").equals(session.getAttribute("memberId"))) {	
+				<%	String urlUp = "bbsProcServlet?action=update&mId=" + session.getAttribute("mWritterId") + "&bId=" + session.getAttribute("bId"); 
+					String urlDel = "bbsProcServlet?action=delete&mId=" + session.getAttribute("mWritterId") + "&bId=" + session.getAttribute("bId");
+					if(session.getAttribute("mWritterId").equals(session.getAttribute("memberId"))) {	
 				%>
 					
 				<button onclick="location.href='<%=urlUp%>'">수정</button>&nbsp;&nbsp;

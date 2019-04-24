@@ -30,7 +30,7 @@ public class BbsProc extends HttpServlet {
 
 	protected void doAction(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		String message = "", title = "", context = "";
+		String message = "", title = "", context = "", mWritterName = "";
 		int mId = 0, bId = 0, mWritterId = 0;
 		String action = request.getParameter("action");
 		HttpSession session = request.getSession();
@@ -114,7 +114,7 @@ public class BbsProc extends HttpServlet {
 			bDao.updateBbs(bbs, mId, bId);
 			bDao.close();
 			
-			message = "아래와 같이 수정됨\\n" + bbs.toString();
+			message = "수정 완료";
 			request.setAttribute("message", message);
 			request.setAttribute("url", "bbs_list.jsp");
 			rd = request.getRequestDispatcher("alertMsg.jsp");
@@ -162,9 +162,13 @@ public class BbsProc extends HttpServlet {
 				mWritterId = Integer.parseInt(request.getParameter("mId").trim());
 			if (!request.getParameter("bId").equals(""))
 				bId = Integer.parseInt(request.getParameter("bId").trim());
+			if (!request.getParameter("mName").equals(""))
+				mWritterName = (String) request.getParameter("mName").trim();
 			
+			//System.out.println(mWritterName);
 			session.setAttribute("bId", bId);
-			session.setAttribute("mWritterrId", mWritterId);
+			session.setAttribute("mWritterId", mWritterId);
+			session.setAttribute("mWritterName", mWritterName);
 			response.sendRedirect("bbs_list_content.jsp");
 			
 			break;

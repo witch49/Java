@@ -86,14 +86,14 @@ public class BbsDAO {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/* 2 - 글 조회(글번호 순서대로 글 목록 출력) */
 	public List<BbsDTO> selectPostsAll() {
 		String sql = "select * from bbs order by bbs_id desc;";
 		List<BbsDTO> postlist = selectCondition(sql);
 		return postlist;
 	}
-	
+
 	/* 주어진 query에 해당하는 데이터 목록 출력 */
 	public List<BbsDTO> selectCondition(String query) {
 		PreparedStatement pStmt = null;
@@ -124,7 +124,7 @@ public class BbsDAO {
 		}
 		return bbslist;
 	}
-	
+
 	/* bbs 단일 선택 */
 	public BbsDTO selectOne(int bId) {
 		String query = "select * from bbs where bbs_id=?;";
@@ -140,7 +140,7 @@ public class BbsDAO {
 				bbs.setBbsMemberId(rs.getInt(2));
 				bbs.setBbsTitle(rs.getString(3));
 				bbs.setBbsDate(rs.getString(4));
-				bbs.setBbsContent(rs.getString(5));	
+				bbs.setBbsContent(rs.getString(5));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -154,10 +154,11 @@ public class BbsDAO {
 		}
 		return bbs;
 	}
-	
+
 	/* 3 - 변경 (글 수정, 본인이 작성한 것만 가능) */
 	public void updateBbs(BbsDTO bbs, int mId, int bId) {
-		String query = "UPDATE bbs SET title=?, date=date_format(now(), '%y-%m-%d %H:%i'), content=? WHERE memberId=" + mId + " AND bbs_id=" + bId + ";";
+		String query = "UPDATE bbs SET title=?, date=date_format(now(), '%y-%m-%d %H:%i'), content=? WHERE memberId="
+				+ mId + " AND bbs_id=" + bId + ";";
 
 		PreparedStatement pStmt = null;
 		try {
@@ -176,7 +177,7 @@ public class BbsDAO {
 			}
 		}
 	}
-	
+
 	/* 4 - 삭제 (id를 입력받아 본인이 작성한 글이라면 삭제) */
 	public void deleteBbs(int bId, int mId) {
 		String query = "DELETE from bbs where bbs_id=? and memberId=?;";
@@ -197,7 +198,36 @@ public class BbsDAO {
 			}
 		}
 	}
+
+	/* join문 가져오기 */
+	public String selectMemberName(int mId) {
+		String query = "select member.name from member inner join bbs on bbs.memberId = member.id where member.id=? limit 1;";
+		PreparedStatement pStmt = null;
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, mId);
+			ResultSet rs = pstmt.executeQuery();
+			if (rs.next()) {
+				return rs.getString(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pStmt != null && !pStmt.isClosed())
+					pStmt.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return null; // DB 오류
+	}
 	
+	
+	///////////////////////////////////////////////////
+	// 참고 사이트 : https://okky.kr/article/283315
+	///////////////////////////////////////////////////
+
 	/* 글 10개씩 조회 */
 	public List<BbsDTO> getList(int pageNumber) {
 		String sql = "select * from bbs limit ?, 10;";
@@ -220,9 +250,9 @@ public class BbsDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return list; 
+		return list;
 	}
-	
+
 	// 전체 글의 개수 가져오기
 	public int getListCount() {
 		String sql = "select count(*) from bbs";
@@ -238,7 +268,5 @@ public class BbsDAO {
 		}
 		return -1; // 데이터베이스 오류
 	}
-	
-	//https://okky.kr/article/283315
 
 }
