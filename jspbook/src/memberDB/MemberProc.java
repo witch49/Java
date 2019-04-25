@@ -38,6 +38,7 @@ public class MemberProc extends HttpServlet {
 		MemberDTO member = null;
 		MemberDAO mDao = new MemberDAO();
 		RequestDispatcher rd = null;
+		List<MemberDTO> memberlist = null;
 		
 		switch(action) {
 			///////////////////////////////////////////////////////////////////////////////
@@ -50,7 +51,7 @@ public class MemberProc extends HttpServlet {
 			
 			switch (result) {
 			case MemberDAO.ID_PASSWORD_MATCH:
-				errorMessage = null;
+				errorMessage = "";
 				break;
 			case MemberDAO.ID_DOES_NOT_EXIST:
 				errorMessage = "없는 아이디";
@@ -61,24 +62,40 @@ public class MemberProc extends HttpServlet {
 			case MemberDAO.DATABASE_ERROR:
 				errorMessage = "DB 오류";
 				break;
+			default:
+				errorMessage = "";
 			}
 			
 			if (result == MemberDAO.ID_PASSWORD_MATCH) {
 				member = mDao.selectOne(id);
 				session.setAttribute("memberId", id);
 				session.setAttribute("memberName", member.getMemberName());
-				response.sendRedirect("loginMain.jsp");
-			} else {
-				// 방법 1 - 상대방이 getParameter("error")로 받을 때
-				String url = "login.jsp?error=" + errorMessage;
-				rd = request.getRequestDispatcher(url);
-				rd.forward(request, response);
+							
+				mDao = new MemberDAO();
+				memberlist = mDao.selectMembersAll();
+				request.setAttribute("memberlist", memberlist);
 				
-				// 방법 2 - 상대방이 getAttribute("error")로 받을 때
-//				request.setAttribute("error", errorMessage);
-//				RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
-//				rd.forward(request, response);
+				rd = request.getRequestDispatcher("loginMain.jsp");
+				rd.forward(request, response);
+			} else {
+				request.setAttribute("message", errorMessage);
+				request.setAttribute("url", "login.jsp");
+				rd = request.getRequestDispatcher("alertMsg.jsp");
+				rd.forward(request, response);
 			}
+			
+			break;
+			///////////////////////////////////////////////////////////////////////////////
+		case "goBackloginMain": 	// 글 게시판에서 회원 명단 화면으로 되돌아오기 
+
+			member = mDao.selectOne(id);
+						
+			mDao = new MemberDAO();
+			memberlist = mDao.selectMembersAll();
+			request.setAttribute("memberlist", memberlist);
+			
+			rd = request.getRequestDispatcher("loginMain.jsp");
+			rd.forward(request, response);
 			
 			break;
 			
@@ -123,7 +140,7 @@ public class MemberProc extends HttpServlet {
 			}
 			
 			member = mDao.selectOne(id);
-			mDao.close();	
+			mDao.close();			
 			
 			request.setAttribute("member", member);
 			rd = request.getRequestDispatcher("update.jsp");
@@ -143,18 +160,27 @@ public class MemberProc extends HttpServlet {
 			address = request.getParameter("address");
 			
 			member = new MemberDTO(id, "*", name, birth, address);
+			request.setAttribute("member", member);
 			System.out.println(member.toString());
 			
 			mDao.updateMember(member);
-			mDao.close();
+	
+			mDao = new MemberDAO();
+			memberlist = mDao.selectMembersAll();
+			request.setAttribute("memberlist", memberlist);
+					
+			rd = request.getRequestDispatcher("loginMain.jsp");
+			rd.forward(request, response);			
 			
-			message = "아래와 같이 수정됨\\n" + member.toString();
-			request.setAttribute("message", message);
-			request.setAttribute("url", "loginMain.jsp");
-			rd = request.getRequestDispatcher("alertMsg.jsp");
-			rd.forward(request, response);
-			
-			response.sendRedirect("loginMain.jsp");
+//			mDao.close();
+//			
+//			message = "아래와 같이 수정됨\\n" + member.toString();
+//			request.setAttribute("message", message);
+//			request.setAttribute("url", "loginMain.jsp");
+//			rd = request.getRequestDispatcher("alertMsg.jsp");
+//			rd.forward(request, response);
+//			
+//			response.sendRedirect("loginMain.jsp");
 			
 			break;
 			
@@ -175,15 +201,22 @@ public class MemberProc extends HttpServlet {
 			mDao.deleteMember(id);
 			mDao.close();
 			
-			message = "id = " + id + " 삭제 완료";
-			String url = "loginMain.jsp";
-			request.setAttribute("message", message);
-			request.setAttribute("url", url);
+			mDao = new MemberDAO();
+			memberlist = mDao.selectMembersAll();
+			request.setAttribute("memberlist", memberlist);
 			
-			rd = request.getRequestDispatcher("alertMsg.jsp");
+			rd = request.getRequestDispatcher("loginMain.jsp");
 			rd.forward(request, response);
 			
-			System.out.println(action + " id " + id + " 완료");
+//			message = "id = " + id + " 삭제 완료";
+//			String url = "loginMain.jsp";
+//			request.setAttribute("message", message);
+//			request.setAttribute("url", url);
+//			
+//			rd = request.getRequestDispatcher("alertMsg.jsp");
+//			rd.forward(request, response);
+//			
+//			System.out.println(action + " id " + id + " 완료");
 			break;
 			
 			///////////////////////////////////////////////////////////////////////////////

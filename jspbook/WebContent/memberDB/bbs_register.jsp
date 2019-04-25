@@ -10,13 +10,12 @@
 <div align="center">
 <h3>글 작성 폼</h3>
 	<hr>
-	<% String uu = "/jspbook/memberDB/bbsProcServlet?action=registerBtn&mId=" + session.getAttribute("memberId"); %>
-	<form name="registerForm" action="<%= uu %>" method="post">
+	<form name="registerForm" action="/jspbook/memberDB/bbsProcServlet?action=registerBtn&mId=${memberId}&page=${currentBbsPage}" method="post">
 	
 	<table border="1" style="border:1px solid black; text-align:center; border-collapse:collapse; margin:auto;">
 		<tr>
 			<th bgcolor="pink" style="width:100px">회원 ID</th>
-			<td style="width:550px">&nbsp;<%= session.getAttribute("memberId") %></td>
+			<td style="width:550px">&nbsp;${memberId}</td>
 		</tr>
 		<tr>
 			<th bgcolor="pink">제목</th>

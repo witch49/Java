@@ -1,12 +1,9 @@
 package memberDB;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.*;
+import java.util.*;
+import org.mindrot.jbcrypt.BCrypt;
 
 public class BbsDAO {
 	public static final int ID_PASSWORD_MATCH = 1;
@@ -108,7 +105,7 @@ public class BbsDAO {
 				bbs.setBbsId(rs.getInt(1));
 				bbs.setBbsMemberId(rs.getInt(2));
 				bbs.setBbsTitle(rs.getString(3));
-				bbs.setBbsDate(rs.getString(4));
+				bbs.setBbsDate(rs.getString(4).substring(0, 16));
 				bbs.setBbsContent(rs.getString(5));
 				bbslist.add(bbs);
 			}
@@ -139,7 +136,7 @@ public class BbsDAO {
 				bbs.setBbsId(rs.getInt(1));
 				bbs.setBbsMemberId(rs.getInt(2));
 				bbs.setBbsTitle(rs.getString(3));
-				bbs.setBbsDate(rs.getString(4));
+				bbs.setBbsDate(rs.getString(4).substring(0, 16));
 				bbs.setBbsContent(rs.getString(5));
 			}
 		} catch (Exception e) {
@@ -200,12 +197,13 @@ public class BbsDAO {
 	}
 
 	/* join문 가져오기 */
-	public String selectMemberName(int mId) {
-		String query = "select member.name from member inner join bbs on bbs.memberId = member.id where member.id=? limit 1;";
+	public String selectMemberName(int mId, int bId) {
+		String query = "select member.name from member inner join bbs on bbs.memberId = member.id where bbs.memberId=? and bbs.bbs_id=?;";
 		PreparedStatement pStmt = null;
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, mId);
+			pstmt.setInt(2, bId);
 			ResultSet rs = pstmt.executeQuery();
 			if (rs.next()) {
 				return rs.getString(1);
@@ -243,7 +241,7 @@ public class BbsDAO {
 				bbs.setBbsId(rs.getInt(1));
 				bbs.setBbsMemberId(rs.getInt(2));
 				bbs.setBbsTitle(rs.getString(3));
-				bbs.setBbsDate(rs.getString(4));
+				bbs.setBbsDate(rs.getString(4).substring(0, 16));
 				bbs.setBbsContent(rs.getString(5));
 				list.add(bbs);
 			}

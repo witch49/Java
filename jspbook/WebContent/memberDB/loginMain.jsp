@@ -1,12 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="java.util.*" %>
-<%@ page import="memberDB.*" %>
-<%
-	request.setCharacterEncoding("UTF-8");
-	MemberDAO mDao = new MemberDAO();
-	List<MemberDTO> memberlist = mDao.selectMembersAll();
-	mDao.close();
-%>
+    pageEncoding="UTF-8"  %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -16,8 +10,8 @@
 <body>
 <div align="center">
 	<hr>
-	현재 접속중인 고객ID: <%= session.getAttribute("memberId") %> / 이름: <%= session.getAttribute("memberName") %><br>
-	<a href="bbs_list.jsp">게시판</a>&nbsp;&nbsp;
+	현재 접속중인 고객ID: ${ sessionScope.memberId } / 이름: ${ sessionScope.memberName }<br>
+	<a href="/jspbook/memberDB/bbsProcServlet?action=gotoBbsList&page=1">게시판</a>&nbsp;&nbsp;
 	<a href="twitter_list.jsp">트윗</a>&nbsp;&nbsp;
 	<a href="/jspbook/memberDB/memberProcServlet?action=logout">로그아웃</a>
 	<hr>
@@ -31,20 +25,18 @@
 		<th width="80">생년월일</th>
 		<th width="300">주소</th>
 		<th colspan=2 width="100">액션</th>
-		
 	</tr>
-	<% for(MemberDTO m : memberlist) { %>
-	<tr>
-		<td><%= m.getMemberId() %></td>
-		<td><%= m.getMemberName() %></td>
-		<td><%= m.getMemberBirth() %></td>
-		<td><%= m.getMemberAddress() %></td>
-		<%	String urlUp = "memberProcServlet?action=update&id=" + m.getMemberId(); 
-			String urlDel = "memberProcServlet?action=delete&id=" + m.getMemberId(); %>
-		<td><button onclick="location.href='<%=urlUp%>'">수정</button></td>
-		<td><button onclick="location.href='<%=urlDel%>'">삭제</button></td>
-	</tr>
-	<% } %>
+	<c:set var="memberlist" value="${requestScope.memberlist}"/>
+	<c:forEach var="m" items="${memberlist}">
+		<tr>
+			<td>${m.memberId}</td>
+			<td>${m.memberName}</td>
+			<td>${m.memberBirth}</td>
+			<td>${m.memberAddress}</td>
+			<td><button onclick="location.href='memberProcServlet?action=update&id=${m.memberId}'">수정</button></td>
+			<td><button onclick="location.href='memberProcServlet?action=delete&id=${m.memberId}'">삭제</button></td>
+		</tr>
+	</c:forEach>
 	</table>	
 </div>
 </body>
