@@ -13,9 +13,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @WebServlet("/memberDB/memberProcServlet")
 public class MemberProc extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static final Logger LOG = LoggerFactory.getLogger(MemberProc.class);
        
     public MemberProc() {
         super();
@@ -43,6 +47,7 @@ public class MemberProc extends HttpServlet {
 		switch(action) {
 			///////////////////////////////////////////////////////////////////////////////
 		case "login":	// 로그인
+			LOG.trace("Member login start");
 			if (!request.getParameter("id").equals(""))
 				id = Integer.parseInt(request.getParameter("id").trim());
 			password = request.getParameter("password");
@@ -77,17 +82,18 @@ public class MemberProc extends HttpServlet {
 				
 				rd = request.getRequestDispatcher("loginMain.jsp");
 				rd.forward(request, response);
+				LOG.trace("Member login success");
 			} else {
 				request.setAttribute("message", errorMessage);
 				request.setAttribute("url", "login.jsp");
 				rd = request.getRequestDispatcher("alertMsg.jsp");
 				rd.forward(request, response);
+				LOG.trace("Member login fail");
 			}
-			
 			break;
 			///////////////////////////////////////////////////////////////////////////////
 		case "goBackloginMain": 	// 글 게시판에서 회원 명단 화면으로 되돌아오기 
-
+			LOG.info("goBackloginMain start");
 			member = mDao.selectOne(id);
 						
 			mDao = new MemberDAO();
@@ -96,18 +102,21 @@ public class MemberProc extends HttpServlet {
 			
 			rd = request.getRequestDispatcher("loginMain.jsp");
 			rd.forward(request, response);
-			
+			LOG.info("goBackloginMain success");
 			break;
 			
 			///////////////////////////////////////////////////////////////////////////////
 		case "logout":	// 로그아웃
+			LOG.trace("Member logout start");
 			session.removeAttribute("memberId");
 			session.removeAttribute("memberName");
-			response.sendRedirect("login.jsp");			
+			response.sendRedirect("login.jsp");	
+			LOG.trace("Member logout success");
 			break;
 		
 			///////////////////////////////////////////////////////////////////////////////
 		case "register":	// 회원 가입
+			LOG.debug("Member register start");
 			password = request.getParameter("memberPassword");
 			name = request.getParameter("memberName");
 			String strBirth = request.getParameter("memberBirth");
@@ -122,20 +131,22 @@ public class MemberProc extends HttpServlet {
 			request.setAttribute("url", "login.jsp");
 			rd = request.getRequestDispatcher("alertMsg.jsp");
 			rd.forward(request, response);
-			
+			LOG.debug("Member register success");
 			break;
 			
 			///////////////////////////////////////////////////////////////////////////////
 		case "update":	// 수정 버튼 클릭
+			LOG.debug("Member update start");
 			if (!request.getParameter("id").equals(""))
 				id = Integer.parseInt(request.getParameter("id").trim());
 			
 			if(id != (Integer) session.getAttribute("memberId")) {
 				message = "본인 계정이 아닙니다.";
 				request.setAttribute("message", message);
-				request.setAttribute("url", "loginMain.jsp");
+				request.setAttribute("url", "memberProcServlet?action=goBackloginMain");
 				rd = request.getRequestDispatcher("alertMsg.jsp");
 				rd.forward(request, response);
+				LOG.debug("Member update fail : not your account");
 				break;
 			}
 			
@@ -145,13 +156,12 @@ public class MemberProc extends HttpServlet {
 			request.setAttribute("member", member);
 			rd = request.getRequestDispatcher("update.jsp");
 			rd.forward(request, response);
-					
-			System.out.println(action + " id " + id + " 완료");
+			LOG.debug("Member update success - goto update page");
 			break;
 			
 			///////////////////////////////////////////////////////////////////////////////
 		case "execute":	// 수정 후 완료 버튼
-			
+			LOG.debug("Member account update execute start");
 			if (!request.getParameter("id").equals(""))
 				id = Integer.parseInt(request.getParameter("id").trim());
 
@@ -161,7 +171,6 @@ public class MemberProc extends HttpServlet {
 			
 			member = new MemberDTO(id, "*", name, birth, address);
 			request.setAttribute("member", member);
-			System.out.println(member.toString());
 			
 			mDao.updateMember(member);
 	
@@ -169,32 +178,28 @@ public class MemberProc extends HttpServlet {
 			memberlist = mDao.selectMembersAll();
 			request.setAttribute("memberlist", memberlist);
 					
-			rd = request.getRequestDispatcher("loginMain.jsp");
-			rd.forward(request, response);			
+			message = "아래와 같이 수정됨\\n" + member.toString();
+			request.setAttribute("message", message);
+			request.setAttribute("url", "memberProcServlet?action=goBackloginMain");
+			rd = request.getRequestDispatcher("alertMsg.jsp");
+			rd.forward(request, response);
 			
-//			mDao.close();
-//			
-//			message = "아래와 같이 수정됨\\n" + member.toString();
-//			request.setAttribute("message", message);
-//			request.setAttribute("url", "loginMain.jsp");
-//			rd = request.getRequestDispatcher("alertMsg.jsp");
-//			rd.forward(request, response);
-//			
-//			response.sendRedirect("loginMain.jsp");
-			
+			LOG.debug("Member account update execute success");
 			break;
 			
 			///////////////////////////////////////////////////////////////////////////////
 		case "delete":	// 삭제 버튼 클릭
+			LOG.debug("Member delete start");
 			if (!request.getParameter("id").equals(""))
 				id = Integer.parseInt(request.getParameter("id").trim());
 			
 			if(id != (Integer) session.getAttribute("memberId")) {
 				message = "본인 계정이 아닙니다.";
 				request.setAttribute("message", message);
-				request.setAttribute("url", "loginMain.jsp");
+				request.setAttribute("url", "memberProcServlet?action=goBackloginMain");
 				rd = request.getRequestDispatcher("alertMsg.jsp");
 				rd.forward(request, response);
+				LOG.debug("Member delete fail : not your account");
 				break;
 			}
 			
@@ -205,23 +210,17 @@ public class MemberProc extends HttpServlet {
 			memberlist = mDao.selectMembersAll();
 			request.setAttribute("memberlist", memberlist);
 			
-			rd = request.getRequestDispatcher("loginMain.jsp");
+			message = "id = " + id + " 삭제 완료";
+			request.setAttribute("message", message);
+			request.setAttribute("url", "memberProcServlet?action=goBackloginMain");
+			rd = request.getRequestDispatcher("alertMsg.jsp");
 			rd.forward(request, response);
-			
-//			message = "id = " + id + " 삭제 완료";
-//			String url = "loginMain.jsp";
-//			request.setAttribute("message", message);
-//			request.setAttribute("url", url);
-//			
-//			rd = request.getRequestDispatcher("alertMsg.jsp");
-//			rd.forward(request, response);
-//			
-//			System.out.println(action + " id " + id + " 완료");
+			LOG.debug("Member delete success");
 			break;
 			
 			///////////////////////////////////////////////////////////////////////////////
 		case "tweet":	// 트윗
-
+			LOG.info("goto tweet start");
 			message = request.getParameter("msg");
 			String username = (String) session.getAttribute("memberName");
 			ServletContext application = request.getServletContext();
@@ -246,10 +245,10 @@ public class MemberProc extends HttpServlet {
 
 			// 목록 화면으로 리다이렉팅
 			response.sendRedirect("twitter_list.jsp");
-
+			LOG.info("goto twitter_list success");
 			break;
 		default:
-			
+			LOG.info("action value ERROR!!");
 		}
 	
 	}

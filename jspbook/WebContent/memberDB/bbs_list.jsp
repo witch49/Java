@@ -53,6 +53,7 @@
 	
 	<button onclick="location.href='bbsProcServlet?action=register&mId=${ sessionScope.memberId }'" style="float:right; margin-right:5em;">
 	글 작성</button><br>
+	<p style="float:right; margin-right:5em;"><a href="fileServlet?action=bbs">download</a></p>
 
 </div>
 </body>

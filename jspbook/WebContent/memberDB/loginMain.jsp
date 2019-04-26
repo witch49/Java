@@ -38,6 +38,10 @@
 		</tr>
 	</c:forEach>
 	</table>	
+	
+	<br>
+	<p style="float:right; margin-right:5em;"><a href="fileServlet?action=member">download</a></p>
+
 </div>
 </body>
 </html>
