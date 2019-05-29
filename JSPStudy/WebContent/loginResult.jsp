@@ -12,12 +12,21 @@
 	<hr>
 	
 	<c:choose>
-		<c:when test="${(param.userId == 'root') && (param.userPwd == '1234') && (param.userType == '관리자')}" >
-			<p>어서오세요, 관리자님</p>
+		<c:when test="${(param.userId == 'root') && (param.userType == '관리자')}">
+			<c:choose>
+				<c:when test="${param.userPwd == '1234'}" >
+					<p>어서오세요, 관리자님</p>
+				</c:when>
+				<c:otherwise>
+					<% out.println("<script>alert('비밀번호 오류');window.history.back();</script>"); %>
+					<%-- <c:redirect url="loginForm.jsp" /> --%>
+				</c:otherwise>
+			</c:choose>
 		</c:when>
 		<c:otherwise>
 			<p>어서오세요, 일반 사용자님</p>
 		</c:otherwise>
 	</c:choose>
+	
 </body>
 </html>
